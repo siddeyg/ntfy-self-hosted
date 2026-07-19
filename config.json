@@ -1,0 +1,16 @@
+{
+    "ntfy": {
+        "url": "http://5.252.227.183",
+        "username": "admin",
+        "password": "goonline4M"
+    },
+    "database": "articles.db",
+    "sites": [
+        {
+            "name": "The Decoder",
+            "module": "the_decoder",
+            "topic": "the-decoder-updates",
+            "enabled": true
+        }
+    ]
+}

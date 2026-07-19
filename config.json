@@ -11,6 +11,12 @@
             "module": "the_decoder",
             "topic": "the-decoder-updates",
             "enabled": true
+        },
+        {
+            "name": "Heise KI",
+            "module": "heise_ki",
+            "topic": "heise-ki-updates",
+            "enabled": true
         }
     ]
 }

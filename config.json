@@ -17,6 +17,12 @@
             "module": "heise_ki",
             "topic": "heise-ki-updates",
             "enabled": true
+        },
+        {
+            "name": "OCCRP",
+            "module": "occrp",
+            "topic": "occrp-updates",
+            "enabled": true
         }
     ]
 }

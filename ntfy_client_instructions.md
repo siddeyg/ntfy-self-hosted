@@ -4,6 +4,8 @@ This document provides the necessary information for another Gemini instance or 
 
 ## Server Details
 
+**CRITICAL RULE:** We ALWAYS use this self-hosted server for notifications. We NEVER use the public `ntfy.sh` server.
+
 - **Base URL:** `http://5.252.227.183`
 - **Port:** `80`
 - **Authentication:** Required (Basic Auth)

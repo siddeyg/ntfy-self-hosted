@@ -39,8 +39,14 @@ class BaseScraper:
         conn.commit()
 
     def send_ntfy_alert(self, title, url, snippet):
-        ntfy_url = f"{self.config['ntfy']['url'].rstrip('/')}/{self.topic}"
-        auth = (self.config['ntfy']['username'], self.config['ntfy']['password'])
+        ntfy_base = self.site_config.get('ntfy_url', self.config['ntfy']['url'])
+        ntfy_url = f"{ntfy_base.rstrip('/')}/{self.topic}"
+        
+        auth = None
+        if 'ntfy_username' in self.site_config and 'ntfy_password' in self.site_config:
+            auth = (self.site_config['ntfy_username'], self.site_config['ntfy_password'])
+        elif 'ntfy_url' not in self.site_config and 'username' in self.config['ntfy'] and 'password' in self.config['ntfy']:
+            auth = (self.config['ntfy']['username'], self.config['ntfy']['password'])
         
         message = f"{title}\n\n{snippet}...\n\nLink: {url}"
         
@@ -51,13 +57,15 @@ class BaseScraper:
         }
         
         try:
-            response = requests.post(
-                ntfy_url,
-                auth=auth,
-                data=message.encode('utf-8'),
-                headers=headers,
-                timeout=10
-            )
+            kwargs = {
+                'data': message.encode('utf-8'),
+                'headers': headers,
+                'timeout': 10
+            }
+            if auth:
+                kwargs['auth'] = auth
+                
+            response = requests.post(ntfy_url, **kwargs)
             if response.status_code == 200:
                 print(f"[{self.site_name}] Successfully sent alert for: {title}")
             else:

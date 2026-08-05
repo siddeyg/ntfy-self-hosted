@@ -6,7 +6,8 @@ This document summarizes the existing projects and services running on the `powe
 
 | Service Name | Description | Status |
 |--------------|-------------|--------|
-| `ntfy.service` | ntfy notification server | Running (Port 80) |
+| `nginx.service` | Nginx Web/Proxy Server | Running (Ports 80, 443) |
+| `ntfy.service` | ntfy notification server | Running (Port 8002, behind Nginx) |
 | `klimacamp.service` | Klimacamp Hamm Aggregator | Running |
 | `klimacamp-web.service` | Klimacamp Hamm Ticker Web Dashboard | Running (Port 8080) |
 | `ssh.service` | OpenBSD Secure Shell server | Running (Port 22) |
@@ -17,7 +18,10 @@ This document summarizes the existing projects and services running on the `powe
 | Port | Protocol | Service / Process |
 |------|----------|-------------------|
 | 22   | TCP      | SSHD |
-| 80   | TCP      | ntfy |
+| 80   | TCP      | Nginx (Proxies default to ntfy, and specific domains) |
+| 443  | TCP      | Nginx (SSL for specific domains like bonn-gerichte) |
+| 8001 | TCP      | bonn-gerichte app (Local only) |
+| 8002 | TCP      | ntfy (Local only) |
 | 8080 | TCP      | Gunicorn (Klimacamp Web Dashboard) |
 
 ## Project Directories (`/home/cy/`)
@@ -53,6 +57,6 @@ Several scrapers and monitors run via cron jobs:
 
 ## Observations
 
-*   **Web Servers**: No standard Nginx, Apache, or Caddy installations were found in common paths. Gunicorn is serving `klimacamp-web` directly on port 8080.
+*   **Web Servers**: Nginx is now installed and serves as a reverse proxy on ports 80/443. It proxies traffic to `ntfy` (port 8002) as the default catch-all, and handles specific domains (e.g., `gerichte.bonngiesst.de` proxying to `bonn-gerichte` on port 8001). Gunicorn still serves `klimacamp-web` directly on port 8080.
 *   **Docker**: Not installed.
 *   **Environment**: Primarily Python-based projects using virtual environments (`venv`).

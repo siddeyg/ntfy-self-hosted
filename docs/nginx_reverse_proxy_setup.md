@@ -17,3 +17,13 @@ As of August 5, 2026, the server architecture on `powersrv-small` has been updat
 ## Impact on Monitoring Scripts
 
 - **No changes required**. Because Nginx forwards all default traffic on port 80 directly to `ntfy`, the python scrapers and any API calls hitting `http://5.252.227.183` continue to work exactly as they did before without needing port adjustments or configuration updates.
+
+## WebSocket Support (Added Aug 9, 2026)
+
+To resolve `SocketTimeoutException` errors in the Android ntfy app (caused by Nginx terminating idle JSON streams), the Nginx `default_server` configuration (`ntfy_default.conf`) was updated to fully support WebSockets. The following directives were added to the `location /` block:
+- `proxy_http_version 1.1;`
+- `proxy_set_header Upgrade $http_upgrade;`
+- `proxy_set_header Connection "upgrade";`
+- `proxy_read_timeout 86400s;` and `proxy_send_timeout 86400s;` (to keep connections alive for 24h).
+
+Client applications and agents should prefer using WebSockets when subscribing to topics.

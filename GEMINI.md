@@ -33,5 +33,5 @@ When the user asks you to add a new website to monitor:
 4. Test locally using `source venv/bin/activate && python main.py --site <site_name>`.
 5. Upon successful testing, the code can be synced to `powersrv-small` and `./install.sh` executed.
 
-## 5. Ongoing / Known Issues
-- **Android App SocketTimeoutExceptions**: The Android `ntfy` app may experience timeouts if configured to use "JSON Stream" instead of WebSockets. The Nginx reverse proxy on `powersrv-small` currently requires the `Upgrade` and `Connection` headers added to support WebSockets natively. (Pending user server-side config update).
+## 5. Known Guidelines / Resolutions
+- **Android App SocketTimeoutExceptions**: Solved on August 9, 2026. The Nginx reverse proxy on `powersrv-small` has been updated with WebSocket upgrade headers. Users connecting via the Android app should ensure their connection protocol is set to **WebSockets** rather than "JSON Stream" to prevent battery drain and random disconnects.

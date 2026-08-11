@@ -22,7 +22,14 @@ This project has been modularized. DO NOT create single, monolithic scripts. Fol
 
 - Do not manually edit cron jobs on the server; `install.sh` manages them and manual edits (via `crontab -e`) will be overwritten.
 - **`setup_cron.py`**: Dynamically calculates a 10-minute offset for each website in `config.json` and generates cron jobs. This prevents server spikes.
-- **`install.sh`**: Run this script on the target server to deploy. It updates the Python virtual environment, installs dependencies, and runs `setup_cron.py`.
+- **Deployment Commands** (see [`docs/deployment_guide.md`](file:///home/cy/AI/simple%20gemini%20tasks/ntfy-self-hosted/docs/deployment_guide.md) for full details):
+  ```bash
+  # 1. Sync code to server
+  rsync -avz --exclude 'venv' --exclude 'articles.db' --exclude '.git' --exclude 'combined.log' ./ powersrv-small:/home/cy/ntfy-self-hosted/
+
+  # 2. Run install script on server
+  ssh powersrv-small "cd /home/cy/ntfy-self-hosted && ./install.sh"
+  ```
 
 ## 4. Development Workflow
 

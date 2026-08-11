@@ -1,6 +1,17 @@
 import sqlite3
 import requests
 import time
+import base64
+
+def encode_rfc2047(text):
+    if not text:
+        return text
+    try:
+        text.encode('ascii')
+        return text
+    except UnicodeEncodeError:
+        b64 = base64.b64encode(text.encode('utf-8')).decode('ascii')
+        return f"=?utf-8?B?{b64}?="
 
 class BaseScraper:
     def __init__(self, config, site_config):
@@ -50,8 +61,9 @@ class BaseScraper:
         
         message = f"{title}\n\n{snippet}...\n\nLink: {url}"
         
+        raw_title = f"New Article: {self.site_name}"
         headers = {
-            "Title": f"New Article: {self.site_name}",
+            "Title": encode_rfc2047(raw_title),
             "Click": url,
             "Tags": "newspaper"
         }

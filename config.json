@@ -29,6 +29,12 @@
             "module": "gruene_bonn",
             "topic": "gruene-bonn-termine",
             "enabled": true
+        },
+        {
+            "name": "Grüne Bonn Fraktion",
+            "module": "gruene_bonn_fraktion",
+            "topic": "gruene-bonn-fraktion",
+            "enabled": true
         }
     ]
 }

@@ -23,6 +23,12 @@
             "module": "occrp",
             "topic": "occrp-updates",
             "enabled": true
+        },
+        {
+            "name": "Grüne Bonn Termine",
+            "module": "gruene_bonn",
+            "topic": "gruene-bonn-termine",
+            "enabled": true
         }
     ]
 }

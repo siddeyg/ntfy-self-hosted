@@ -35,6 +35,12 @@
             "module": "gruene_bonn_fraktion",
             "topic": "gruene-bonn-fraktion",
             "enabled": true
+        },
+        {
+            "name": "The Autopilot",
+            "module": "the_autopilot",
+            "topic": "the-autopilot-updates",
+            "enabled": true
         }
     ]
 }

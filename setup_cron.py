@@ -23,26 +23,20 @@ def main():
         print("No enabled sites found in config.json to schedule.")
         return
 
-    # Base hours: 07, 12, 18
-    # We will offset each site by 10 minutes from the base time
-    
     cron_lines = []
     
     for idx, site in enumerate(sites):
-        offset = idx * 10
-        if offset >= 60:
-            print(f"Warning: Too many sites! Offset {offset}m exceeds an hour.")
-            # Advanced handling could wrap to the next hour, but let's keep it simple for now
-            offset = offset % 60
-            
+        total_offset = 10 + (idx * 10)
+        hour_shift = total_offset // 60
+        minute = total_offset % 60
+        
+        start_hour = 8 + hour_shift
+        end_hour = 20 + hour_shift
+        
+        hour_str = f"{start_hour}-{end_hour}/2"
         module = site['module']
         
-        # Schedule for ~07:00
-        cron_lines.append(f"{offset} 7 * * * cd {repo_dir} && {venv_dir}/bin/python main.py --site {module} >> combined.log 2>&1")
-        # Schedule for ~12:30
-        cron_lines.append(f"{30 + (offset % 30) if 30 + (offset % 30) < 60 else offset % 30} 12 * * * cd {repo_dir} && {venv_dir}/bin/python main.py --site {module} >> combined.log 2>&1")
-        # Schedule for ~18:30
-        cron_lines.append(f"{30 + (offset % 30) if 30 + (offset % 30) < 60 else offset % 30} 18 * * * cd {repo_dir} && {venv_dir}/bin/python main.py --site {module} >> combined.log 2>&1")
+        cron_lines.append(f"{minute} {hour_str} * * * cd {repo_dir} && {venv_dir}/bin/python main.py --site {module} >> combined.log 2>&1")
 
     # Read current crontab
     try:

@@ -5,6 +5,7 @@ All notable changes to the `ntfy-self-hosted` project will be documented in this
 ## [Unreleased] - 2026-08-11
 
 ### Added
+- **Google Alerts Scraper** (`scrapers/google_alerts.py`): Monitors a Google Alerts RSS feed for a specific ISBN, pushing alerts to `google-alerts-isbn`.
 - **Grüne Bonn Fraktion Scraper** (`scrapers/gruene_bonn_fraktion.py`): Monitors `https://gruene-bonn.de/fraktion/` for new press releases and posts, pushing alerts to `gruene-bonn-fraktion`.
 - **Grüne Bonn Termine Scraper** (`scrapers/gruene_bonn.py`): Monitors `https://gruene-bonn.de/partei/termine/` for new event entries, pushing alerts to `gruene-bonn-termine`.
 - **`CHANGELOG.md`**: Created changelog to track feature additions, fixes, and server updates.

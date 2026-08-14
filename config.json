@@ -41,6 +41,13 @@
             "module": "the_autopilot",
             "topic": "the-autopilot-updates",
             "enabled": true
+        },
+        {
+            "name": "Google Alerts - ISBN 9789403926148",
+            "module": "google_alerts",
+            "topic": "google-alerts-isbn",
+            "url": "https://www.google.com/alerts/feeds/17965664883667393089/13737656385643774079",
+            "enabled": true
         }
     ]
 }

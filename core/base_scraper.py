@@ -49,9 +49,11 @@ class BaseScraper:
         ''', (self.site_name, url, title, content, published_at))
         conn.commit()
 
-    def send_ntfy_alert(self, title, url, snippet):
+    def send_ntfy_alert(self, title, url, snippet, article=None):
+        if article is None:
+            article = {}
+
         ntfy_base = self.site_config.get('ntfy_url', self.config['ntfy']['url'])
-        ntfy_url = f"{ntfy_base.rstrip('/')}/{self.topic}"
         
         auth = None
         if 'ntfy_username' in self.site_config and 'ntfy_password' in self.site_config:
@@ -59,25 +61,50 @@ class BaseScraper:
         elif 'ntfy_url' not in self.site_config and 'username' in self.config['ntfy'] and 'password' in self.config['ntfy']:
             auth = (self.config['ntfy']['username'], self.config['ntfy']['password'])
         
-        message = f"{title}\n\n{snippet}...\n\nLink: {url}"
-        
-        raw_title = f"New Article: {self.site_name}"
-        headers = {
-            "Title": encode_rfc2047(raw_title),
-            "Click": url,
-            "Tags": "newspaper"
+        message = article.get('custom_message') or f"{title}\n\n{snippet}...\n\nLink: {url}"
+        raw_title = article.get('custom_title') or f"New Article: {self.site_name}"
+        click_url = article.get('click_url') or url
+        raw_tags = article.get('tags') or "newspaper"
+
+        if isinstance(raw_tags, str):
+            tags = [t.strip() for t in raw_tags.split(",") if t.strip()]
+        elif isinstance(raw_tags, list):
+            tags = raw_tags
+        else:
+            tags = ["newspaper"]
+
+        payload = {
+            "topic": self.topic,
+            "title": raw_title,
+            "message": message,
+            "click": click_url,
+            "tags": tags
         }
-        
+
+        # Process actions if provided (structured dicts or string format)
+        if 'actions' in article and article['actions']:
+            actions_list = []
+            for act in article['actions']:
+                if isinstance(act, dict):
+                    actions_list.append(act)
+                elif isinstance(act, str):
+                    parts = [p.strip() for p in act.split(',', 2)]
+                    if len(parts) >= 3:
+                        actions_list.append({
+                            "action": parts[0],
+                            "label": parts[1],
+                            "url": parts[2]
+                        })
+            if actions_list:
+                payload["actions"] = actions_list
+
         try:
-            kwargs = {
-                'data': message.encode('utf-8'),
-                'headers': headers,
-                'timeout': 10
-            }
-            if auth:
-                kwargs['auth'] = auth
-                
-            response = requests.post(ntfy_url, **kwargs)
+            response = requests.post(
+                ntfy_base.rstrip('/'),
+                json=payload,
+                auth=auth,
+                timeout=10
+            )
             if response.status_code == 200:
                 print(f"[{self.site_name}] Successfully sent alert for: {title}")
             else:
@@ -117,7 +144,7 @@ class BaseScraper:
                 )
                 
                 snippet = article['content'][:150] if article.get('content') else ""
-                self.send_ntfy_alert(article['title'], article['url'], snippet)
+                self.send_ntfy_alert(article['title'], article['url'], snippet, article=article)
                 
                 time.sleep(2) # Avoid hammering ntfy API
                 

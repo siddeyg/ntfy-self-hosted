@@ -2,7 +2,19 @@
 
 All notable changes to the `ntfy-self-hosted` project will be documented in this file.
 
-## [Unreleased] - 2026-08-11
+## [Unreleased] - 2026-08-22
+
+### Added
+- **Calendar Import Feature for Grüne Bonn Termine** (`scrapers/gruene_bonn.py`):
+  - 1-click Google Calendar import button (`📅 In Kalender eintragen`) with pre-filled title, Europe/Berlin timezone-aware start/end datetimes (converted to UTC ISO format `YYYYMMDDTHHMMSSZ`), location, and description link.
+  - Interactive Action button to open the event website (`🌐 Webseite öffnen`).
+  - Automatic venue & street address scraping from event detail pages with fallback to listing location.
+  - SQLite database caching to skip detail page requests for already-processed events.
+- **ntfy JSON API & Action Buttons Support** (`core/base_scraper.py`):
+  - Migrated `BaseScraper.send_ntfy_alert` to ntfy's native JSON publishing API, enabling full UTF-8 emojis and structured interactive action buttons without Latin-1 header encoding constraints.
+  - Added support for custom titles, custom formatted message bodies, custom tag lists, and action buttons per scraper while maintaining 100% backward compatibility.
+
+## [1.2.0] - 2026-08-11
 
 ### Added
 - **Google Alerts Scraper** (`scrapers/google_alerts.py`): Monitors a Google Alerts RSS feed for a specific ISBN, pushing alerts to `google-alerts-isbn`.

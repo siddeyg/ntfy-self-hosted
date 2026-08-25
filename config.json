@@ -25,13 +25,13 @@
             "enabled": true
         },
         {
-            "name": "Grüne Bonn Termine",
+            "name": "Gr\u00fcne Bonn Termine",
             "module": "gruene_bonn",
             "topic": "gruene-bonn-termine",
             "enabled": true
         },
         {
-            "name": "Grüne Bonn Fraktion",
+            "name": "Gr\u00fcne Bonn Fraktion",
             "module": "gruene_bonn_fraktion",
             "topic": "gruene-bonn-fraktion",
             "enabled": true
@@ -48,6 +48,20 @@
             "topic": "google-alerts-isbn",
             "url": "https://www.google.com/alerts/feeds/17965664883667393089/13737656385643774079",
             "enabled": true
+        },
+        {
+            "name": "Special Email Monitor",
+            "module": "imap_monitor",
+            "topic": "special-email-alerts",
+            "enabled": true,
+            "imap": {
+                "host": "mail.artfiles.de",
+                "port": 993,
+                "user": "info@diemachtderworte.de",
+                "password": "goonline4murkser",
+                "folder": "INBOX",
+                "search_criteria": ["FROM", "haehnstueber.de"]
+            }
         }
     ]
 }

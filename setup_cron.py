@@ -26,17 +26,22 @@ def main():
     cron_lines = []
     
     for idx, site in enumerate(sites):
-        total_offset = 10 + (idx * 10)
-        hour_shift = total_offset // 60
-        minute = total_offset % 60
-        
-        start_hour = 8 + hour_shift
-        end_hour = 20 + hour_shift
-        
-        hour_str = f"{start_hour}-{end_hour}/2"
         module = site['module']
+        custom_cron = site.get('cron_schedule')
         
-        cron_lines.append(f"{minute} {hour_str} * * * cd {repo_dir} && {venv_dir}/bin/python main.py --site {module} >> combined.log 2>&1")
+        if custom_cron:
+            cron_lines.append(f"{custom_cron} cd {repo_dir} && {venv_dir}/bin/python main.py --site {module} >> combined.log 2>&1")
+        else:
+            total_offset = 10 + (idx * 10)
+            hour_shift = total_offset // 60
+            minute = total_offset % 60
+            
+            start_hour = 8 + hour_shift
+            end_hour = 20 + hour_shift
+            
+            hour_str = f"{start_hour}-{end_hour}/2"
+            
+            cron_lines.append(f"{minute} {hour_str} * * * cd {repo_dir} && {venv_dir}/bin/python main.py --site {module} >> combined.log 2>&1")
 
     # Read current crontab
     try:

@@ -53,6 +53,7 @@
             "name": "Special Email Monitor",
             "module": "imap_monitor",
             "topic": "special-email-alerts",
+            "cron_schedule": "20 8,11,15,18,19 * * *",
             "enabled": true,
             "imap": {
                 "host": "mail.artfiles.de",

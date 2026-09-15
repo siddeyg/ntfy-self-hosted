@@ -2,6 +2,17 @@
 
 All notable changes to the `ntfy-self-hosted` project will be documented in this file.
 
+## [1.3.0] - 2026-09-15
+
+### Added
+- **DDoSecrets Scraper** (`scrapers/ddosecrets.py`):
+  - Monitors `https://ddosecrets.org/all_articles/recent` for new leak publications.
+  - Pushes alerts to topic `ddossecret` on self-hosted ntfy server (`http://5.252.227.183`).
+  - Rich metadata extraction: download size, tags/types, countries, publication date, and description snippet.
+  - Interactive Action buttons for direct magnet link and article website.
+  - Initial run seeding protection: seeds existing leaks into SQLite to avoid push spam, and sends a single startup notification.
+  - Configured in `config.json` and scheduled on `powersrv-small` via staggered cron (offset 30 min, `30 9-21/2 * * *`).
+
 ## [Unreleased] - 2026-08-22
 
 ### Added

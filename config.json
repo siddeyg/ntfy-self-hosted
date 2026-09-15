@@ -63,6 +63,12 @@
                 "folder": "INBOX",
                 "search_criteria": ["FROM", "haehnstueber.de"]
             }
+        },
+        {
+            "name": "DDoSecrets",
+            "module": "ddosecrets",
+            "topic": "ddossecret",
+            "enabled": true
         }
     ]
 }

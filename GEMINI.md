@@ -42,3 +42,4 @@ When the user asks you to add a new website to monitor:
 
 ## 5. Known Guidelines / Resolutions
 - **Android App SocketTimeoutExceptions**: Solved on August 9, 2026. The Nginx reverse proxy on `powersrv-small` has been updated with WebSocket upgrade headers. Users connecting via the Android app should ensure their connection protocol is set to **WebSockets** rather than "JSON Stream" to prevent battery drain and random disconnects.
+- **DDoSecrets Scraper & Seeding**: Added on September 15, 2026. Uses topic `ddossecret`. Detects new leaks on `https://ddosecrets.org/all_articles/recent`. Implements initial run automatic seeding into `articles.db` to prevent spamming hundreds of historical alerts when newly deployed.

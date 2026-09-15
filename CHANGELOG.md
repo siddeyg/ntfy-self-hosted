@@ -13,6 +13,9 @@ All notable changes to the `ntfy-self-hosted` project will be documented in this
   - Initial run seeding protection: seeds existing leaks into SQLite to avoid push spam, and sends a single startup notification.
   - Configured in `config.json` and scheduled on `powersrv-small` via staggered cron (offset 30 min, `30 9-21/2 * * *`).
 
+### Changed
+- **Deactivated Legacy ntfy in Standalone Project**: Disabled direct alerts to `mondo-srv-k9x4` in `/home/cy/ddosecrets/check_new_leaks.py` (both locally and on `powersrv-small`) to eliminate duplicate push notifications while preserving the automated CSV/JSON index generation.
+
 ## [Unreleased] - 2026-08-22
 
 ### Added

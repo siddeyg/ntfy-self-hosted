@@ -2,6 +2,21 @@
 
 All notable changes to the `ntfy-self-hosted` project will be documented in this file.
 
+## [1.4.0] - 2026-09-16
+
+### Added
+- **Netzpolitik.org Scraper** (`scrapers/netzpolitik.py`):
+  - Monitors `https://netzpolitik.org/feed/` for new article publications.
+  - Pushes alerts to topic `netzpolitik` on self-hosted ntfy server (`http://5.252.227.183`).
+  - Cleans teaser text from RSS summary while removing figure/caption markup.
+  - Extracts article thumbnail URL and passes it as `attach` for inline image preview in ntfy clients.
+  - Extracts topic tags and adds interactive action button (`Artikel lesen`).
+  - Full fallback article extraction from `div.entry-content` into `articles.db`.
+  - Initial run seeding: automatically seeds existing 25 articles into SQLite on first deployment and sends a single startup confirmation alert to prevent push spam.
+  - Scheduled via `setup_cron.py` on `powersrv-small` with 10-minute offset (`40 9-21/2 * * *`).
+- **ntfy Image Attachment Support** (`core/base_scraper.py`):
+  - Added support for `attach` field in `BaseScraper.send_ntfy_alert` payload for inline preview of article thumbnails.
+
 ## [1.3.0] - 2026-09-15
 
 ### Added

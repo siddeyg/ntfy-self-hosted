@@ -69,6 +69,12 @@
             "module": "ddosecrets",
             "topic": "ddossecret",
             "enabled": true
+        },
+        {
+            "name": "netzpolitik.org",
+            "module": "netzpolitik",
+            "topic": "netzpolitik",
+            "enabled": true
         }
     ]
 }

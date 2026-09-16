@@ -81,6 +81,9 @@ class BaseScraper:
             "tags": tags
         }
 
+        if 'attach' in article and article['attach']:
+            payload['attach'] = article['attach']
+
         # Process actions if provided (structured dicts or string format)
         if 'actions' in article and article['actions']:
             actions_list = []

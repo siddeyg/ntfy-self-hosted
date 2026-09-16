@@ -20,6 +20,8 @@ All notable changes to the `ntfy-self-hosted` project will be documented in this
 ### Changed
 - **Execution Schedule for netzpolitik.org** (`config.json`):
   - Configured custom schedule `"cron_schedule": "40 8,20 * * *"` to run twice daily at 08:40 and 20:40 instead of every 2 hours.
+- **Standalone DDoSecrets Indexing Schedule**:
+  - Reduced background indexer run frequency on `powersrv-small` (`/home/cy/ddosecrets/check_new_leaks.py`) from 3 times to twice daily (`0 6,18 * * *` at 06:00 and 18:00).
 
 ### Fixed
 - **Crontab Filtering in `setup_cron.py`**:

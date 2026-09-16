@@ -52,8 +52,9 @@ def main():
     # Filter out old ntfy-self-hosted jobs
     new_cron = []
     for line in current_cron.splitlines():
-        if "ntfy-self-hosted/main.py" not in line:
-            new_cron.append(line)
+        if "ntfy-self-hosted" in line and "main.py" in line:
+            continue
+        new_cron.append(line)
             
     # Add new jobs
     new_cron.extend(cron_lines)

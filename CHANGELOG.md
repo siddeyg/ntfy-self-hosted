@@ -21,6 +21,10 @@ All notable changes to the `ntfy-self-hosted` project will be documented in this
 - **Execution Schedule for netzpolitik.org** (`config.json`):
   - Configured custom schedule `"cron_schedule": "40 8,20 * * *"` to run twice daily at 08:40 and 20:40 instead of every 2 hours.
 
+### Fixed
+- **Crontab Filtering in `setup_cron.py`**:
+  - Corrected cleanup filter condition to match both `ntfy-self-hosted` and `main.py` when re-installing crontab lines, preventing duplicate cron job accumulation.
+
 ## [1.3.0] - 2026-09-15
 
 ### Added

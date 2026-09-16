@@ -17,6 +17,10 @@ All notable changes to the `ntfy-self-hosted` project will be documented in this
 - **ntfy Image Attachment Support** (`core/base_scraper.py`):
   - Added support for `attach` field in `BaseScraper.send_ntfy_alert` payload for inline preview of article thumbnails.
 
+### Changed
+- **Execution Schedule for netzpolitik.org** (`config.json`):
+  - Configured custom schedule `"cron_schedule": "40 8,20 * * *"` to run twice daily at 08:40 and 20:40 instead of every 2 hours.
+
 ## [1.3.0] - 2026-09-15
 
 ### Added

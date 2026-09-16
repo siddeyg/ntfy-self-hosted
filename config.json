@@ -74,6 +74,7 @@
             "name": "netzpolitik.org",
             "module": "netzpolitik",
             "topic": "netzpolitik",
+            "cron_schedule": "40 8,20 * * *",
             "enabled": true
         }
     ]
